@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Customer(models.Model):
@@ -50,3 +51,31 @@ class CartProduct(models.Model):
 
     def __str__(self):
         return "Cart: "+ str(self.cart.id) + " CartProduct: "+ str(self.id)
+    
+    ORDER_STATUS =  (
+        ("Order Received","Order Received"),
+        ("Order Completed","On Completed"),
+        ("Order Canceled","Order Canceled"),
+    )
+
+# You need to define the ORDER_STATUS choices before using them in the model
+ORDER_STATUS = (
+    ('Order Received', 'Order Received'),
+    ('Order Delivered', 'Order Delivered'),
+    ('Order Cancelled', 'Order Cancelled'),
+)
+
+class Order(models.Model):
+    cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
+    ordered_by = models.CharField(max_length=200)
+    shipping_address = models.CharField(max_length=200)
+    mobile = models.CharField(max_length=10)
+    email = models.EmailField()
+    subtotal = models.PositiveIntegerField()
+    discount = models.PositiveIntegerField()
+    total = models.PositiveIntegerField()
+    order_status = models.CharField(max_length=50, choices=ORDER_STATUS)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "Order: " + str(self.id)
