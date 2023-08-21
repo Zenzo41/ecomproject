@@ -8,8 +8,15 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
-        context['myname'] = "Zen Sama"
         context['product_list'] = Product.objects.all()
+        return context
+
+class AllProductsView(TemplateView):
+    template_name = "allproducts.html"
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['allcategories'] = Category.objects.all()
         return context
 
 class AboutView(TemplateView):
