@@ -6,11 +6,12 @@
 
 <h1>Welcome to our ecommerce website.</h1>
 
-{% for p in product_list %}
-
-    <h3>{{p.title}}</h3>
-    <img src="{{p.image.url}}" width="200"/>
-
-    {% endfor %}
-
-{% endblock content %}
+<div class="row">
+    {% for p in product_list %}
+        <div class="col-md-4">   
+            <h3>{{p.title}}</h3>
+            <img src="{{p.image.url}}" width="200"/>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock content %}
