@@ -35,7 +35,7 @@ class Product(models.Model):
         return self.title
     
 class Cart(models.Model):
-    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL)
+    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True)
     total = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
