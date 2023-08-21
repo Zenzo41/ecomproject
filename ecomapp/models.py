@@ -52,16 +52,10 @@ class CartProduct(models.Model):
     def __str__(self):
         return "Cart: "+ str(self.cart.id) + " CartProduct: "+ str(self.id)
     
-    ORDER_STATUS =  (
-        ("Order Received","Order Received"),
-        ("Order Completed","On Completed"),
-        ("Order Canceled","Order Canceled"),
-    )
-
 # You need to define the ORDER_STATUS choices before using them in the model
 ORDER_STATUS = (
     ('Order Received', 'Order Received'),
-    ('Order Delivered', 'Order Delivered'),
+    ('Order Completed', 'Order Completed'),
     ('Order Cancelled', 'Order Cancelled'),
 )
 
