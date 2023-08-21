@@ -40,3 +40,13 @@ class Cart(models.Model):
 
     def __str__(self):
         return "Cart: " + str(self.id)
+    
+class CartProduct(models.Model):
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    rate = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField()
+    subtotal = models.PositiveIntegerField()
+
+    def __str__(self):
+        return "Cart: "+ str(self.cart.id) + " CartProduct: "+ str(self.id)
