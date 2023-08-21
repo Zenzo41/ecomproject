@@ -19,6 +19,9 @@ class AllProductsView(TemplateView):
         context['allcategories'] = Category.objects.all()
         return context
 
+class ProductDetailView(TemplateView):
+    template_name = "productdetail.html"
+
 class AboutView(TemplateView):
     template_name = "about.html"
 
