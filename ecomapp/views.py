@@ -30,6 +30,10 @@ class ProductDetailView(TemplateView):
         product.save()
         context['product'] = product
         return context
+    
+class AddToCartView(TemplateView):
+    template_name="addtocart.html"
+
 
 class AboutView(TemplateView):
     template_name = "about.html"
