@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import *
@@ -33,6 +34,29 @@ class ProductDetailView(TemplateView):
     
 class AddToCartView(TemplateView):
     template_name="addtocart.html"
+
+    def get_context_data(self, **kwargs):
+        context=  super().get_context_data(**kwargs)
+        
+        #get product id from requested url:
+        product_id = self.kwargs['pro_id']
+
+        #get product
+        product_obj = Product.objects.get(id = product_id)
+        
+        #check if cart exists:
+        cart_id = self.request.session.get(id = product_id)
+        if cart_id:
+            cart_obj = Cart.objects.get(id=cart_id) # Old cart
+            this_product_in_cart = cart_obj.cartproducts_set.filter(product = product_obj)
+
+            #item already exists in cart
+        else:
+            cart_obj = Cart.objects.create(total=0)
+            self.request.session['cart_id']= cart_obj.id # New Cart
+           
+        
+        #check if product already exists in cart:
 
 
 class AboutView(TemplateView):
