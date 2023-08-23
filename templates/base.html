@@ -7,12 +7,15 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    <a href="{% url 'ecomapp:home' %}">Home</a>
-    <a href="{% url 'ecomapp:about' %}">About Us</a>
-    <a href="{% url 'ecomapp:contact' %}">Contact Us</a>
-    <a href="{% url 'ecomapp:allproducts' %}">Categories</a>
-    <a href="{% url 'ecomapp:mycart' %}">View Cart</a>
-    <hr/>
+    <div class="container">
+
+        <a href="{% url 'ecomapp:home' %}">Home</a>
+        <a href="{% url 'ecomapp:about' %}">About Us</a>
+        <a href="{% url 'ecomapp:contact' %}">Contact Us</a>
+        <a href="{% url 'ecomapp:allproducts' %}">Categories</a>
+        <a href="{% url 'ecomapp:mycart' %}">View Cart</a>
+        <hr/>
+    </div>
 {% block content %}{% endblock content %}
 
    </body>

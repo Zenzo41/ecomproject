@@ -39,18 +39,20 @@ class AddToCartView(TemplateView):
         context=  super().get_context_data(**kwargs)
         
         #get product id from requested url:
-        product_id = self.kwargs['pro_id']
+        product_id = self.kwargs['pro_id'] #fetching the id from the url
 
         #get product
-        product_obj = Product.objects.get(id = product_id)
+        product_obj = Product.objects.get(id = product_id) # getting the object based on the id
         
         #check if cart exists:
-        cart_id = self.request.session.get("cart_id",None)
-        if cart_id:
+        cart_id = self.request.session.get("cart_id",None)  
+        if cart_id:  #fetch the cart
             cart_obj = Cart.objects.get(id=cart_id) # Old cart
-            this_product_in_cart = cart_obj.cartproduct_set.filter(product = product_obj)
+            this_product_in_cart = cart_obj.cartproduct_set.filter(product = product_obj) #check if the item we want is already in cart
 
-            #item already exists in cart
+            # cartproduct_set means all cart products in Cart 
+
+            #if item already exists in cart we need to increase
             if this_product_in_cart.exists():
                 cartproduct = this_product_in_cart.last()
                 cartproduct.quantity += 1
@@ -66,10 +68,10 @@ class AddToCartView(TemplateView):
                 cart_obj.total += product_obj.selling_price
                 cart_obj.save()
 
-        else:
+        else: #create a new cart
             cart_obj = Cart.objects.create(total=0)
-            self.request.session['cart_id']= cart_obj.id # New Cart 
-            cartproduct = CartProduct.objects.create(
+            self.request.session['cart_id']= cart_obj.id # New Cart in same session
+            cartproduct = CartProduct.objects.create( # new cartproduct
                     cart = cart_obj,product = product_obj , rate = product_obj.selling_price,quantity = 1, subtotal = product_obj.selling_price)
             cart_obj.total += product_obj.selling_price
             cart_obj.save()
