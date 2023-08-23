@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}My Cart{% endblock title %}
+
 {% block content %}
-<h3>This is your items in the cart.</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Items in the cart.</h3>
+            <table class="table">
+                <tr>
+                    <th>SN</th>
+                    <th>Product</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+        </div>        
+    </div>
+</div>
 {% endblock content %}
