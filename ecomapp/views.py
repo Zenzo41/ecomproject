@@ -76,6 +76,9 @@ class AddToCartView(TemplateView):
 
         return context
 
+class MyCartView(TemplateView):
+    template_name="mycart.html"
+
 class AboutView(TemplateView):
     template_name = "about.html"
 
