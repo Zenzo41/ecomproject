@@ -45,27 +45,35 @@ class AddToCartView(TemplateView):
         
         #check if cart exists:
         cart_id = self.request.session.get("cart_id",None)  
+        this_product_in_cart = None
+
         if cart_id:  #fetch the cart
-            cart_obj = Cart.objects.get(id=cart_id) # Old cart
-            this_product_in_cart = cart_obj.cartproduct_set.filter(product = product_obj) #check if the item we want is already in cart
+            
+            try:
+                cart_obj = Cart.objects.get(id=cart_id) # Old cart
+                this_product_in_cart = cart_obj.cartproduct_set.filter(product = product_obj) #check if the item we want is already in cart
 
+
+                #if item already exists in cart we need to increase
+                if this_product_in_cart.exists():
+                    cartproduct = this_product_in_cart.last()
+                    cartproduct.quantity += 1
+                    cartproduct.subtotal += product_obj.selling_price
+                    cartproduct.save()
+                    cart_obj.total += product_obj.selling_price
+                    cart_obj.save()
+
+                #new item is added in cart
+                else:
+                    cartproduct = CartProduct.objects.create(
+                        cart = cart_obj,product = product_obj , rate = product_obj.selling_price,quantity = 1, subtotal = product_obj.selling_price)
+                    cart_obj.total += product_obj.selling_price
+                    cart_obj.save()
+
+            
+            except Cart.DoesNotExist:
+                cart_obj = None
             # cartproduct_set means all cart products in Cart 
-
-            #if item already exists in cart we need to increase
-            if this_product_in_cart.exists():
-                cartproduct = this_product_in_cart.last()
-                cartproduct.quantity += 1
-                cartproduct.subtotal += product_obj.selling_price
-                cartproduct.save()
-                cart_obj.total += product_obj.selling_price
-                cart_obj.save()
-
-            #new item is added in cart
-            else:
-                cartproduct = CartProduct.objects.create(
-                    cart = cart_obj,product = product_obj , rate = product_obj.selling_price,quantity = 1, subtotal = product_obj.selling_price)
-                cart_obj.total += product_obj.selling_price
-                cart_obj.save()
 
         else: #create a new cart
             cart_obj = Cart.objects.create(total=0)
@@ -78,17 +86,19 @@ class AddToCartView(TemplateView):
         return context
 
 class MyCartView(TemplateView):
-    template_name="mycart.html"  # had forgot to put this which caused major issue
+    template_name = "mycart.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        cart_id = self.request.session.get("cart_id",None)
+        cart_id = self.request.session.get("cart_id", None)
+        print(cart_id)
         if cart_id:
-            cart = Cart.objects.get(id = cart_id)
+            cart = Cart.objects.get(id=cart_id)
         else:
             cart = None
         context['cart'] = cart
         return context
+
     
 class ManageCartView(View):
 
