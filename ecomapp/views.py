@@ -105,7 +105,7 @@ class ManageCartView(View):
             cart_obj.total += cp_obj.rate
             cart_obj.save()
 
-        elif action == "dec":
+        elif action == "dcr":
             cp_obj.quantity -= 1
             cp_obj.subtotal -= cp_obj.rate
             cp_obj.save()
@@ -124,6 +124,18 @@ class ManageCartView(View):
             pass
 
         return redirect("ecomapp:mycart")
+
+
+class EmptyCartView(View):
+    def get(self,request,*args, **kwargs):
+        cart_id = request.session.get("cart_id",None)
+        if cart_id:
+            cart = Cart.objects.get(id = cart_id)
+            cart.cartproduct_set.all().delete()
+            cart.total = 0
+            cart.save()
+        return redirect("ecomapp:mycart")
+
 
 class AboutView(TemplateView):
     template_name = "about.html"
