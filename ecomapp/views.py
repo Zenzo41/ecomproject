@@ -1,5 +1,4 @@
-from typing import Any, Dict
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import TemplateView
 from .models import *
 
@@ -79,7 +78,7 @@ class AddToCartView(TemplateView):
         return context
 
 class MyCartView(TemplateView):
-    template_name="mycart.html"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -90,6 +89,11 @@ class MyCartView(TemplateView):
             cart = None
         context['cart'] = cart
         return context
+    
+class ManageCartView(TemplateView):
+    def get(self,request,*args,**kwargs):
+        print("This is manage  cart section")
+        return redirect("ecomapp:mycart")
     
 
 class AboutView(TemplateView):
