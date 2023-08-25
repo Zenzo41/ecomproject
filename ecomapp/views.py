@@ -115,7 +115,7 @@ class ManageCartView(View):
             cart_obj.total += cp_obj.rate
             cart_obj.save()
 
-        elif action == "dcr":
+        elif action == "dec":  # its dec but i had kept it as dcr
             cp_obj.quantity -= 1
             cp_obj.subtotal -= cp_obj.rate
             cp_obj.save()
