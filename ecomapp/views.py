@@ -146,7 +146,9 @@ class EmptyCartView(View):
             cart.save()
         return redirect("ecomapp:mycart")
 
-
+class CheckoutView(TemplateView):
+    template_name = "checkout.html"
+    
 class AboutView(TemplateView):
     template_name = "about.html"
 
