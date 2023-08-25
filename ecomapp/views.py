@@ -1,6 +1,8 @@
 from typing import Any, Dict
 from django.shortcuts import render,redirect
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView ,CreateView
+from .forms import CheckoutForm
+from django.urls import reverse_lazy
 from .models import *
 
 # Create your views here.
@@ -147,8 +149,10 @@ class EmptyCartView(View):
             cart.save()
         return redirect("ecomapp:mycart")
 
-class CheckoutView(TemplateView):
+class CheckoutView(CreateView):
     template_name = "checkout.html"
+    form_class = CheckoutForm
+    success_url = reverse_lazy("ecomapp:home")
     
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
