@@ -178,10 +178,18 @@ class CheckoutView(CreateView):
 
         return super().form_valid(form)
 
-class CustomerRegistrationView(TemplateView):
+class CustomerRegistrationView(CreateView):
     template_name = "customerregistration.html"
     form_class = CustomerRegistrationForm
-    success_url = reverse_lazy()
+    success_url = reverse_lazy("ecomapp:home")
+
+    def form_valid(self,form):
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        email = form.cleaned_data.get("email")
+        user = User.objects.create_user(username,email,password)
+        form.instance.user = user
+        return super().form_valid(form)
 
 class AboutView(TemplateView):
     template_name = "about.html"
