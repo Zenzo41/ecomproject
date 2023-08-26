@@ -14,7 +14,14 @@
         <a href="{% url 'ecomapp:contact' %}">Contact Us</a>
         <a href="{% url 'ecomapp:allproducts' %}">Categories</a>
         <a href="{% url 'ecomapp:mycart' %}">View Cart</a>
+
+        {% if request.user.customer %}
+            Welcome {{request.user.username}}
+
+        {% else %}
         <a href="{% url 'ecomapp:customerregistration' %}">Register</a>
+        
+        {% endif %}
         <hr/>
     </div>
 {% block content %}{% endblock content %}

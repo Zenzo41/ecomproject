@@ -193,6 +193,12 @@ class CustomerRegistrationView(CreateView):
 
         login(self.request,user)
         return super().form_valid(form)
+    
+class CustomerLogoutView(View):
+    def get(self,request):
+        logout(request)
+        return redirect("ecomapp:home")
+
 
 class AboutView(TemplateView):
     template_name = "about.html"
