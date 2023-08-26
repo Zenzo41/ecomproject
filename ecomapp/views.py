@@ -1,7 +1,6 @@
-from typing import Any, Dict
 from django.shortcuts import render,redirect
 from django.views.generic import View, TemplateView ,CreateView
-from .forms import CheckoutForm
+from .forms import CheckoutForm, CustomerRegistrationForm
 from django.urls import reverse_lazy
 from .models import *
 
@@ -178,6 +177,11 @@ class CheckoutView(CreateView):
             return redirect("ecomapp:home")
 
         return super().form_valid(form)
+
+class CustomerRegistrationView(TemplateView):
+    template_name = "customerregistration.html"
+    form_class = CustomerRegistrationForm
+    success_url = reverse_lazy()
 
 class AboutView(TemplateView):
     template_name = "about.html"
