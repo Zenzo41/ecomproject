@@ -163,6 +163,21 @@ class CheckoutView(CreateView):
             cart_obj = None
         context['cart'] = cart_obj
         return context
+    
+    def form_valid(self,form):
+        cart_id = self.request.session.get("cart_id")
+        if cart_id:
+            cart_obj = Cart.objects.get(id=cart_id)
+            form.instance.cart = cart_obj       #intance used to fill the model fields that weren't shown in form
+            form.instance.subtotal = cart_obj.total
+            form.instance.discount = 0
+            form.instance.total = cart_obj.total
+            form.instance.order_status = "Order Received"
+            del self.request.session["cart_id"]
+        else:
+            return redirect("ecomapp:home")
+
+        return super().form_valid(form)
 
 class AboutView(TemplateView):
     template_name = "about.html"
