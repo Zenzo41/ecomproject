@@ -28,3 +28,11 @@ class CustomerRegistrationForm(forms.ModelForm):
                 "Customer with this username already exists"
             )
         return uname
+
+class CustomerLoginForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.PasswordInput())
+    
+    class Meta:
+        model = Customer
+        fields = ["username", "password"]

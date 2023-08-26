@@ -17,9 +17,11 @@
 
         {% if request.user.customer %}
             Welcome {{request.user.username}}
+            <a href="{% url 'ecomapp:customerlogout' %}">Logout</a>
 
         {% else %}
         <a href="{% url 'ecomapp:customerregistration' %}">Register</a>
+        <a href="{% url 'ecomapp:customerlogin' %}">Login</a>
         
         {% endif %}
         <hr/>

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout 
-from django.views.generic import View, TemplateView ,CreateView
-from .forms import CheckoutForm, CustomerRegistrationForm
+from django.views.generic import View, TemplateView ,CreateView, FormView
+from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
 from django.urls import reverse_lazy
 from .models import *
 
@@ -199,6 +199,21 @@ class CustomerLogoutView(View):
         logout(request)
         return redirect("ecomapp:home")
 
+class CustomerLoginView(View):
+    template_name = "customerlogin.html"
+    form_class = CustomerLoginForm
+    success_url = reverse_lazy("ecomapp:home")
+
+    def form_valid(self,form):
+        uname = form.cleaned_dat.get("username")
+        pword = form.cleaned_dat['password']
+        usr = authenticate(username = uname , password = pword)
+        if usr is not None and usr.customer:
+            login(self.request,usr)
+        else:
+            return render(self.request,self.template_name,{"form":self.form_class,"error":"Invalid Credentials"})
+        
+        return super().form_valid(form)
 
 class AboutView(TemplateView):
     template_name = "about.html"
