@@ -22,7 +22,7 @@
                 <li style="color:red;">{{error}}</li>
                 {% endif %}
             </form>
-            <p>Need an account? <a href="{% url 'ecomapp:customerregistration' %}">Register Here</a></p>
+            <p>Need an account? <a href="{% url 'ecomapp:customerregistration'%}{% if request.GET.next %}?next={{request.GET.next}}{% endif %}">Register Here</a></p>
 
         </div>
     </div>

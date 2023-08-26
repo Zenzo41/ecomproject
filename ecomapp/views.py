@@ -6,6 +6,21 @@ from django.urls import reverse_lazy
 from .models import *
 
 # Create your views here.
+
+class EcomMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        cart_id = request.session.get("cart_id")
+        if cart_id:
+            cart_obj = Cart.objects.get(id= cart_id)
+            if request.user.is_authenticated and request.user.customer:
+                cart_obj.customer = request.user.customer
+                cart_obj.save()
+
+        return super().dispatch(request, *args, **kwargs)
+    
+
+
+
 class HomeView(TemplateView):
     template_name = "home.html"
 
@@ -198,10 +213,16 @@ class CustomerRegistrationView(CreateView):
         email = form.cleaned_data.get("email")
         user = User.objects.create_user(username,email,password)
         form.instance.user = user
-
         login(self.request,user)
         return super().form_valid(form)
-    
+
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get("next")
+            return next_url
+        else:
+            return self.success_url
+           
 class CustomerLogoutView(View):
     def get(self,request):
         logout(request)
@@ -222,11 +243,18 @@ class CustomerLoginView(FormView):
             return render(self.request,self.template_name,{"form":self.form_class,"error":"Invalid Credentials"})
         
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get("next")
+            return next_url
+        else:
+            return self.success_url
 
-class AboutView(TemplateView):
+class AboutView(EcomMixin,TemplateView):
     template_name = "about.html"
 
-class ContactView(TemplateView):
+class ContactView(EcomMixin,TemplateView):
     template_name = "contact.html"
 
 
