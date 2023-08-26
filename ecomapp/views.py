@@ -199,14 +199,14 @@ class CustomerLogoutView(View):
         logout(request)
         return redirect("ecomapp:home")
 
-class CustomerLoginView(View):
+class CustomerLoginView(FormView):
     template_name = "customerlogin.html"
     form_class = CustomerLoginForm
     success_url = reverse_lazy("ecomapp:home")
 
     def form_valid(self,form):
-        uname = form.cleaned_dat.get("username")
-        pword = form.cleaned_dat['password']
+        uname = form.cleaned_data.get("username")
+        pword = form.cleaned_data['password']
         usr = authenticate(username = uname , password = pword)
         if usr is not None and usr.customer:
             login(self.request,usr)

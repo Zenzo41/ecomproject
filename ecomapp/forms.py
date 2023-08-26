@@ -13,8 +13,6 @@ class CustomerRegistrationForm(forms.ModelForm):
     email = forms.CharField(widget=forms.EmailInput())
     
     # Adding the missing fields
-    full_name = forms.CharField(widget=forms.TextInput())
-    address = forms.CharField(widget=forms.TextInput())
 
     class Meta:
         model = Customer
