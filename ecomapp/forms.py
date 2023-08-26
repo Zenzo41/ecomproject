@@ -12,7 +12,6 @@ class CustomerRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     email = forms.CharField(widget=forms.EmailInput())
     
-    # Adding the missing fields
 
     class Meta:
         model = Customer
