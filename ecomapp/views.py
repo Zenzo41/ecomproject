@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate,login,logout 
 from django.views.generic import View, TemplateView ,CreateView
 from .forms import CheckoutForm, CustomerRegistrationForm
 from django.urls import reverse_lazy
@@ -189,6 +190,8 @@ class CustomerRegistrationView(CreateView):
         email = form.cleaned_data.get("email")
         user = User.objects.create_user(username,email,password)
         form.instance.user = user
+
+        login(self.request,user)
         return super().form_valid(form)
 
 class AboutView(TemplateView):
