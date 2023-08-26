@@ -250,6 +250,25 @@ class CustomerLoginView(FormView):
             return next_url
         else:
             return self.success_url
+        
+
+class CustomerProfileView(TemplateView):
+    template_name = "customerprofile.html"
+
+    def dispatch(self,request,*args,**kwargs):
+        if request.user.is_authenticated and request.user.customer:
+            pass    
+        else:
+            return redirect("/login/?next=/profile/")
+        return super().dispatch(request,*args,**kwargs)
+
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = self.request.user.customer
+        context['customer'] = customer
+        return context
+
 
 class AboutView(EcomMixin,TemplateView):
     template_name = "about.html"
