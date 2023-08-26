@@ -267,6 +267,8 @@ class CustomerProfileView(TemplateView):
         context = super().get_context_data(**kwargs)
         customer = self.request.user.customer
         context['customer'] = customer
+        orders = Order.objects.filter(cart__customer = customer)
+        context["orders"] = orders
         return context
 
 
