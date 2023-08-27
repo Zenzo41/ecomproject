@@ -255,19 +255,18 @@ class CustomerLoginView(FormView):
 class CustomerProfileView(TemplateView):
     template_name = "customerprofile.html"
 
-    def dispatch(self,request,*args,**kwargs):
-        if request.user.is_authenticated and request.user.customer:
-            pass    
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and Customer.objects.filter(user=request.user).exists():
+            pass
         else:
             return redirect("/login/?next=/profile/")
-        return super().dispatch(request,*args,**kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
-
-    def get_context_data(self,**kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         customer = self.request.user.customer
         context['customer'] = customer
-        orders = Order.objects.filter(cart__customer = customer)
+        orders = Order.objects.filter(cart__customer=customer).order_by("-id")
         context["orders"] = orders
         return context
 
