@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate,login,logout 
-from django.views.generic import View, TemplateView ,CreateView, FormView
+from django.views.generic import View, TemplateView ,CreateView, FormView,DetailView
 from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
 from django.urls import reverse_lazy
 from .models import *
@@ -273,6 +273,12 @@ class CustomerProfileView(TemplateView):
         orders = Order.objects.filter(cart__customer=customer).order_by("-id")
         context["orders"] = orders
         return context
+
+class CustomerOrderDetailView(DetailView):
+    template_name = "customerorderdetail.html"
+    model = Order
+    context_object_name="ord_obj"
+
 
 
 class AboutView(EcomMixin,TemplateView):
