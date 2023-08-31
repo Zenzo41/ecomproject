@@ -1,3 +1,5 @@
+from typing import Any
+from django import http
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate,login,logout 
 from django.views.generic import View, TemplateView ,CreateView, FormView,DetailView
@@ -279,6 +281,15 @@ class CustomerOrderDetailView(DetailView):
     model = Order
     context_object_name="ord_obj"
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.customer:
+            order_id = self.kwargs['pk']
+            order = Order.objecgts.get(id=order_id)
+            if request.user.customer == order.cart.customer:
+                return redirect("ecomapp:customerprofile")
+        else:
+            return redirect("/login/?next=/profile/")
+        return super().dispatch(request, *args, **kwargs)
 
 
 class AboutView(EcomMixin,TemplateView):
