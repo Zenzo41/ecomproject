@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
+
 {% block title %}Order Detail{% endblock title %}
 
 {% block content %}
@@ -37,7 +38,7 @@
                     {% endfor %}
                     <tr>
                         <th colspan="4" class="text-right">Total</th>
-                        <th>Rs. {{ord_obj.total}}/</th>
+                        <th>Rs. {{ord_obj.total|intcomma}}/</th>
                     </tr>
                 </tbody>
             </table>
