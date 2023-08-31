@@ -4,5 +4,16 @@
 
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h3>Order Detail</h3><hr/>
+            <p><span style="font-weight:bold;">Order ID:</span>#ORDER_{{ord_obj.id}}</p>
+            <p><span style="font-weight:bold;">Order Status:</span>{{ord_obj.order_status}}</p>
+            <p><span style="font-weight:bold;">Ordered On:</span>{{ord_obj.created_at|timesince}} ago</p>
+            <p><span style="font-weight:bold;">Customer Information:</span>By {{ord_obj.ordered_by}}, {{ord_obj.mobile}}, ({{ord_obj.email}})</p>
+            <p><span style="font-weight:bold;">Shipping Address:</span> {{ord_obj.shipping_address}}</p>
+
+        </div>    
+    </div>
 </div>
 {% endblock content %}
