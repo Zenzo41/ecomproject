@@ -284,7 +284,7 @@ class CustomerOrderDetailView(DetailView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.customer:
             order_id = self.kwargs['pk']
-            order = Order.objecgts.get(id=order_id)
+            order = Order.objects.get(id=order_id)
             if request.user.customer == order.cart.customer:
                 return redirect("ecomapp:customerprofile")
         else:
