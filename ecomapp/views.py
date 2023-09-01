@@ -249,7 +249,7 @@ class CustomerLoginView(FormView):
         uname = form.cleaned_data.get("username")
         pword = form.cleaned_data['password']
         usr = authenticate(username = uname , password = pword)
-        if usr is not None and usr.customer:
+        if usr is not None and Customer.objects.filter(user=usr).exists():
             login(self.request,usr)
         else:
             return render(self.request,self.template_name,{"form":self.form_class,"error":"Invalid Credentials"})
@@ -304,8 +304,18 @@ class AdminLoginView(FormView):
     form_class = CustomerLoginForm
     success_url = reverse_lazy("ecomapp:adminhome")
 
+    def form_valid(self,form):      
+        uname = form.cleaned_data.get("username")
+        pword = form.cleaned_data['password']
+        usr = authenticate(username = uname , password = pword)
+        if usr is not None and Admin.objects.filter(user=usr).exists():
+            login(self.request,usr)
+        else:
+            return render(self.request,self.template_name,{"form":self.form_class,"error":"Invalid Credentials"})
+        return super().form_valid(form)
+
 class AdminHomeView(TemplateView):
     template_name = "adminpages/adminhome.html"
 
-
+    
 

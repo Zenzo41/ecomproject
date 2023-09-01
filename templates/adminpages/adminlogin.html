@@ -17,7 +17,7 @@
             <form action = "" method="POST">
                 {% csrf_token %}
                 {{form.as_p}}
-                <button class="btn btn-primary">Login</button>
+                <button class="btn btn-primary">Login as an Admin</button>
                 {% if error %}
                 <li style="color:red;">{{error}}</li>
                 {% endif %}
