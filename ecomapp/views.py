@@ -19,7 +19,13 @@ class EcomMixin(object):
                 cart_obj.save()
 
         return super().dispatch(request, *args, **kwargs)
-    
+
+class AboutView(EcomMixin,TemplateView):
+    template_name = "about.html"
+
+class ContactView(EcomMixin,TemplateView):
+    template_name = "contact.html"
+   
 
 
 
@@ -292,12 +298,10 @@ class CustomerOrderDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AboutView(EcomMixin,TemplateView):
-    template_name = "about.html"
-
-class ContactView(EcomMixin,TemplateView):
-    template_name = "contact.html"
-
-
+#Admin Pages
+class AdminLoginView(FormView):
+    template_name = "adminlogin.html"
+    form_class = AdminLoginForm
+    success_url = reverse_lazy("ecomapp:adminhome")
 
 
