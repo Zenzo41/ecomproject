@@ -304,4 +304,8 @@ class AdminLoginView(FormView):
     form_class = CustomerLoginForm
     success_url = reverse_lazy("ecomapp:adminhome")
 
+class AdminHomeView(TemplateView):
+    template_name = "adminpages/adminhome.html"
+
+
 
