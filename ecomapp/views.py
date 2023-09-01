@@ -249,7 +249,7 @@ class CustomerLoginView(FormView):
         uname = form.cleaned_data.get("username")
         pword = form.cleaned_data['password']
         usr = authenticate(username = uname , password = pword)
-        if usr is not None and Customer.objects.filter(user=usr).exists():
+        if usr is not None and Customer.objects.filter(user=usr).exists(): # allows only customers to login
             login(self.request,usr)
         else:
             return render(self.request,self.template_name,{"form":self.form_class,"error":"Invalid Credentials"})
@@ -288,7 +288,7 @@ class CustomerOrderDetailView(DetailView):
     context_object_name="ord_obj"
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.customer:
+        if request.user.is_authenticated and Customer.objects.filter(user = request.user).exists():
             order_id = self.kwargs['pk']
             order = Order.objects.get(id=order_id)
             if request.user.customer == order.cart.customer:
@@ -308,7 +308,7 @@ class AdminLoginView(FormView):
         uname = form.cleaned_data.get("username")
         pword = form.cleaned_data['password']
         usr = authenticate(username = uname , password = pword)
-        if usr is not None and Admin.objects.filter(user=usr).exists():
+        if usr is not None and Admin.objects.filter(user=usr).exists(): # allows only admins to login
             login(self.request,usr)
         else:
             return render(self.request,self.template_name,{"form":self.form_class,"error":"Invalid Credentials"})
@@ -316,6 +316,13 @@ class AdminLoginView(FormView):
 
 class AdminHomeView(TemplateView):
     template_name = "adminpages/adminhome.html"
+
+    def dispatch(self, request, *args,**kwargs):
+        if request.user.is_authenticated and Admin.objects.filter(user=request.user).exists():
+            pass
+        else:
+            return redirect("/admin-login/")
+        return super().dispatch(request, *args, **kwargs)
 
     
 
