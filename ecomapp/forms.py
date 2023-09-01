@@ -33,3 +33,4 @@ class CustomerLoginForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ["username", "password"]
+
