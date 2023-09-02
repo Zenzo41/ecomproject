@@ -3,5 +3,35 @@
 {% block title %}Admin Home{% endblock title %}
 
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Pending Orders</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>S.NO</th>
+                        <th>Customer</th>
+                        <th>Order ID</th>
+                        <th>Ordered On</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in pendingorders %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{order.ordered_by}}</td>
+                        <td>#ORDER_{{order.id}}</td>
+                        <td>{{order.created_at}}</td>
+                        <td>{{order.total}}<td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            
+            </table>
+        </div>
+    </div>    
+</div>
     
 {% endblock content %}
