@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 from django import http
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate,login,logout 
@@ -323,6 +323,11 @@ class AdminHomeView(TemplateView):
         else:
             return redirect("/admin-login/")
         return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pendingorders'] = Order.objects.filter(order_status = "Order Received")
+        return super().get_context_data(**kwargs)
 
     
 
