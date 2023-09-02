@@ -348,8 +348,11 @@ class AdminOrderListView(ListView):
     context_object_name = "allorders"   
 
 class AdminOrderStatusChangeView(AdminRequiredMixin,View):
-   def post(self,request,*args,**kwargs):
-       order_id = self.kwargs["pk"]
-       order_obj = Order.objects.get(id=order_id)
+   def post(self, request, *args, **kwargs):
+        order_id = self.kwargs["pk"]
+        order_obj = Order.objects.get(id=order_id)
+        new_status = request.POST.get("status")
+        order_obj.order_status = new_status
+        order_obj.save()
+        return redirect(reverse_lazy("ecomapp:adminorderdetail", kwargs={"pk": order_id}))
 
-       return redirect(reverse_lazy("ecomapp:adminorderdetail",kwargs={"pk":self.kwargs["pk"]}))
