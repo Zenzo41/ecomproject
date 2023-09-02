@@ -329,5 +329,8 @@ class AdminHomeView(TemplateView):
         context['pendingorders'] = Order.objects.filter(order_status = "Order Received")
         return super().get_context_data(**kwargs)
 
-    
+class AdminOrderDetailView(TemplateView):
+    template_name = "adminpages/adminorderdetail.html"
+    model = Order
+    context_object_name = "ord_obj"    
 
