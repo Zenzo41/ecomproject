@@ -331,10 +331,15 @@ class AdminHomeView(AdminRequiredMixin,TemplateView):
         context['pendingorders'] = Order.objects.filter(order_status = "Order Received").order_by("-id")
         return super().get_context_data(**kwargs)
 
-class AdminOrderDetailView(TemplateView):
+class AdminOrderDetailView(AdminRequiredMixin, DetailView):
     template_name = "adminpages/adminorderdetail.html"
     model = Order
-    context_object_name = "ord_obj"    
+    context_object_name = "ord_obj"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["allstatus"] = ORDER_STATUS
+        return context
 
 class AdminOrderListView(ListView):
     template_name = "adminpages/adminorderlist.html"
