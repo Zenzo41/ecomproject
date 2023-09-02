@@ -346,3 +346,10 @@ class AdminOrderListView(ListView):
     template_name = "adminpages/adminorderlist.html"
     queryset = Order.objects.all().order_by("-id")
     context_object_name = "allorders"   
+
+class AdminOrderStatusChangeView(AdminRequiredMixin,View):
+   def post(self,request,*args,**kwargs):
+       order_id = self.kwargs["pk"]
+       order_obj = Order.objects.get(id=order_id)
+
+       return redirect(reverse_lazy("ecomapp:adminorderdetail",kwargs={"pk":self.kwargs["pk"]}))
