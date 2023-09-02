@@ -2,7 +2,7 @@ from typing import Any, Dict
 from django import http
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate,login,logout 
-from django.views.generic import View, TemplateView ,CreateView, FormView,DetailView
+from django.views.generic import View, TemplateView ,CreateView, FormView,DetailView,ListView
 from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
 from django.urls import reverse_lazy
 from .models import *
@@ -314,9 +314,7 @@ class AdminLoginView(FormView):
             return render(self.request,self.template_name,{"form":self.form_class,"error":"Invalid Credentials"})
         return super().form_valid(form)
 
-class AdminHomeView(TemplateView):
-    template_name = "adminpages/adminhome.html"
-
+class AdminRequiredMixin(object):
     def dispatch(self, request, *args,**kwargs):
         if request.user.is_authenticated and Admin.objects.filter(user=request.user).exists():
             pass
@@ -324,9 +322,13 @@ class AdminHomeView(TemplateView):
             return redirect("/admin-login/")
         return super().dispatch(request, *args, **kwargs)
     
+
+class AdminHomeView(AdminRequiredMixin,TemplateView):
+    template_name = "adminpages/adminhome.html"
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['pendingorders'] = Order.objects.filter(order_status = "Order Received")
+        context['pendingorders'] = Order.objects.filter(order_status = "Order Received").order_by("-id")
         return super().get_context_data(**kwargs)
 
 class AdminOrderDetailView(TemplateView):
@@ -334,3 +336,7 @@ class AdminOrderDetailView(TemplateView):
     model = Order
     context_object_name = "ord_obj"    
 
+class AdminOrderListView(ListView):
+    template_name = "adminpages/adminorderlist.html"
+    queryset = Order.objects.all().order_by("-id")
+    context_object_name = "allorders"   
