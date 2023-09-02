@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for order in pendingorders %}
+                    {% for order in allorders %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td><a href="{% url 'ecomapp:adminorderdetail' order.id %}">#ORDER_{{order.id}}</a></td>
