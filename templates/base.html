@@ -30,7 +30,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 mx-auto">
-                <form action="" method="GET">
+                <form action="{% url 'ecomapp:search' %}" method="GET">
                     <input type="text" name="keyword" placeholder="Search product here..." required>
                     <button>Search Product</button>
                 </form>
