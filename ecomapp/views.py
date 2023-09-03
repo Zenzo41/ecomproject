@@ -356,3 +356,5 @@ class AdminOrderStatusChangeView(AdminRequiredMixin,View):
         order_obj.save()
         return redirect(reverse_lazy("ecomapp:adminorderdetail", kwargs={"pk": order_id}))
 
+class SearchView(TemplateView):
+    template_name = "search.html"

@@ -23,5 +23,6 @@ urlpatterns = [
     path("admin-home/",AdminHomeView.as_view(),name="adminhome"),
     path("admin-order/<int:pk>/",AdminOrderDetailView.as_view(),name="adminorderdetail"),
     path("admin-all-orders/",AdminOrderListView.as_view(),name="adminorderlist"),
-    path("admin-order-<int:pk>-change/",AdminOrderStatusChangeView.as_view(),name="adminorderstatuschange")
+    path("admin-order-<int:pk>-change/",AdminOrderStatusChangeView.as_view(),name="adminorderstatuschange"),
+    path("search/",SearchView.as_view(),name="search")
 ]
