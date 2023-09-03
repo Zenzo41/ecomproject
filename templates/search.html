@@ -15,8 +15,9 @@
                     <img src = "{{result.image.url}}" class="img-fluid" alt="" >
                 </div>
                 <div class="col-md-8">
-                    <h4>{{result.title}}</h4>
-                    <p>{{result.description}}</p>
+                    <h4><a href="{% url 'ecomapp:productdetail' result.slug%}">{{result.title}}</a></h4>
+                    <p>{{result.description | truncatewords:50}}</p>
+                    <p>Return Policy: {{result.return_policy }}</p>
                 </div>
             </div>
             {% endfor %}
