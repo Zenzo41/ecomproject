@@ -5,6 +5,8 @@ from django.views.generic import View, TemplateView ,CreateView, FormView,Detail
 from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
 from django.urls import reverse_lazy
 from .models import *
+#paginator
+from  django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -34,7 +36,12 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
-        context['product_list'] = Product.objects.all().order_by("-id")
+        all_products = Product.objects.all().order_by("-id")
+        #paginator
+        paginator = Paginator(all_products,1)
+        page_number = self.request.GET.get("page")
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
         return context
 
 class AllProductsView(TemplateView):
