@@ -1,11 +1,11 @@
-from typing import Any, Dict
-from django import http
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate,login,logout 
 from django.views.generic import View, TemplateView ,CreateView, FormView,DetailView,ListView
 from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
 from django.urls import reverse_lazy
 from .models import *
+
 
 # Create your views here.
 
@@ -358,3 +358,11 @@ class AdminOrderStatusChangeView(AdminRequiredMixin,View):
 
 class SearchView(TemplateView):
     template_name = "search.html"
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        kw = self.request.GET.get("keyword")
+        results = Product.objects.filter(Q(title__icontains = kw) | Q(description__icontains = kw))
+        context["results"] = results
+
+        return context
