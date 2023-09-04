@@ -220,6 +220,15 @@ class CheckoutView(CreateView):
             return redirect("ecomapp:home")
 
         return super().form_valid(form)
+    
+
+#
+#
+#Khalti
+class KhaltiRequestView(View):
+    def get(self,request,*args,**kwargs):
+        context ={}
+        return render(request,"khaltirequest.html",context)
 
 class CustomerRegistrationView(CreateView):
     template_name = "customerregistration.html"
@@ -373,11 +382,3 @@ class SearchView(TemplateView):
         context["results"] = results
 
         return context
-
-#
-#
-#Khalti
-class KhaltiRequestView(View):
-    def get(self,request,*args,**kwargs):
-        context ={}
-        return render(request,"khaltirequest.html",context)
