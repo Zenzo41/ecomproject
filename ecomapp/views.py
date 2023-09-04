@@ -219,7 +219,7 @@ class CheckoutView(CreateView):
             pm = form.cleaned_data.get("payment_method")
             order =form.save()
             if pm == "Khalti":
-                return redirect(reverse("ecomapp:khaltirequest "))
+                return redirect(reverse("ecomapp:khaltirequest ")+"?o_id"+str(order.id))
         
         else:
             return redirect("ecomapp:home")
@@ -231,7 +231,11 @@ class CheckoutView(CreateView):
 #Khalti
 class KhaltiRequestView(View):
     def get(self,request,*args,**kwargs):
-        context ={}
+        o_id = request.GET.get("o_id")
+        order = Order.objects.get(id=o_id)
+        context ={
+            "order":order
+        }
         return render(request,"khaltirequest.html",context)
 
 class CustomerRegistrationView(CreateView):
