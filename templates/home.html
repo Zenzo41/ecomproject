@@ -60,7 +60,7 @@
                 {% endif %}
 
                 {% for i in product_list.paginator.page_range %}
-                    <li class="page-item"><a class="page-link" href="#">{{i}}</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
                 {% endfor %}
             
               {% if product_list.has_next %}
