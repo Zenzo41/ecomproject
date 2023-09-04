@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate,login,logout 
 from django.views.generic import View, TemplateView ,CreateView, FormView,DetailView,ListView
 from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from .models import *
 #paginator
 from  django.core.paginator import Paginator
@@ -216,11 +216,15 @@ class CheckoutView(CreateView):
             form.instance.total = cart_obj.total
             form.instance.order_status = "Order Received"
             del self.request.session["cart_id"]
+            pm = form.cleaned_data.get("payment_method")
+            order =form.save()
+            if pm == "Khalti":
+                return redirect(reverse("ecomapp:khaltirequest "))
+        
         else:
             return redirect("ecomapp:home")
 
         return super().form_valid(form)
-    
 
 #
 #
