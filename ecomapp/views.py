@@ -373,3 +373,9 @@ class SearchView(TemplateView):
         context["results"] = results
 
         return context
+
+#
+#
+#Khalti
+class KhaltiRequestView(TemplateView):
+    template_name = "khaltirequest.html"
