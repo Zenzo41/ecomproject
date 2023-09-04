@@ -31,7 +31,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         {% if request.user.customer %}
-                        Welcome {{request.user.username}}</li>
+                        <li class="nav-item">
+                          Welcome {{request.user.username}}
+                        </li><br/>
                         <a class="dropdown-item" href="{% url 'ecomapp:customerprofile' %}">My Profile</a></li>
                         <a class="dropdown-item" href="{% url 'ecomapp:customerlogout' %}">Logout</a></li>
             
