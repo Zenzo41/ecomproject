@@ -377,5 +377,7 @@ class SearchView(TemplateView):
 #
 #
 #Khalti
-class KhaltiRequestView(TemplateView):
-    template_name = "khaltirequest.html"
+class KhaltiRequestView(View):
+    def get(self,request,*args,**kwargs):
+        context ={}
+        return render(request,"khaltirequest.html",context)
