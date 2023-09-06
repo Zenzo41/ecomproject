@@ -220,7 +220,7 @@ class CheckoutView(CreateView):
             pm = form.cleaned_data.get("payment_method")
             order =form.save()
             if pm == "Khalti":
-                return redirect(reverse("ecomapp:khaltirequest ")+"?o_id"+str(order.id))
+                return redirect(reverse("ecomapp:khaltirequest")+"?o_id"+str(order.id))
         
         else:
             return redirect("ecomapp:home")
