@@ -29,4 +29,5 @@ urlpatterns = [
     #
     # khalti 
     path("khalti-request/",KhaltiRequestView.as_view(),name="khaltirequest"),
+    path("khalti-verify/",KhaltiVerifyView.as_view(),name="khaltiverify"),
 ]

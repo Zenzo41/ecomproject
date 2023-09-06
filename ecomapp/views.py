@@ -5,6 +5,7 @@ from django.views.generic import View, TemplateView ,CreateView, FormView,Detail
 from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
 from django.urls import reverse_lazy,reverse
 from .models import *
+from django.http import JsonResponse
 #paginator
 from  django.core.paginator import Paginator
 
@@ -237,6 +238,10 @@ class KhaltiRequestView(View):
             "order":order
         }
         return render(request,"khaltirequest.html",context)
+    
+class KhaltiVerifyView(View):
+    def get(self,request,*args,**kwargs):
+        data = {}
 
 class CustomerRegistrationView(CreateView):
     template_name = "customerregistration.html"
