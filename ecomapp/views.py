@@ -6,6 +6,7 @@ from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
 from django.urls import reverse_lazy,reverse
 from .models import *
 from django.http import JsonResponse
+import requests
 #paginator
 from  django.core.paginator import Paginator
 
@@ -258,7 +259,7 @@ class KhaltiVerifyView(View):
 
         order_obj = Order.objects.get(id=o_id)
 
-        response = request.post(url, payload, headers=headers)
+        response = requests.post(url, payload, headers=headers)
         resp_dict = response.json()
         if resp_dict.get("idx"):
             success = True
