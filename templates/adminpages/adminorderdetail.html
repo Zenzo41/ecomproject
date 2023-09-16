@@ -36,6 +36,7 @@
                         <td>{{cp.rate}}</td>
                         <td>{{cp.quantity}}</td>
                         <td>{{cp.subtotal}}</td>
+                        
                     </tr>
                     {% endfor %}
                     <tr>
@@ -45,25 +46,26 @@
                 </tbody>
             </table>
 
-            <form action="{% url 'ecomapp:adminorderstatuschange' ord_obj.id %}" method="POST">
-                {% csrf_token %}
-                <select name="status">
-                    {% for i, j in allstatus %}
-                    <option value="{{i}}" {% if i == ord_obj.order_status %}selected{% endif %}>{{j}}</option>
-                    {% endfor %}
-                </select>
-                <button class="btn btn-info">Change</button>
-                
-            </form>
-
-            <form action="{% url 'ecomapp:adminpaymentstatuschange' ord_obj.id %}" method="POST">
-                {% csrf_token %}
-                <select name="payment_status">
-                    <option value="completed" {% if ord_obj.payment_completed %}selected{% endif %}>Completed</option>
-                    <option value="pending" {% if not ord_obj.payment_completed %}selected{% endif %}>Pending</option>
-                </select>
-                <button class="btn btn-info">Change</button>
-            </form>
+            <div style="display: flex; justify-content: space-between;">
+                <form action="{% url 'ecomapp:adminorderstatuschange' ord_obj.id %}" method="POST">
+                    {% csrf_token %}
+                    <select name="status">
+                        {% for i, j in allstatus %}
+                        <option value="{{i}}" {% if i == ord_obj.order_status %}selected{% endif %}>{{j}}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-info">Change</button>
+                </form>
+            
+                <form action="{% url 'ecomapp:adminpaymentstatuschange' ord_obj.id %}" method="POST">
+                    {% csrf_token %}
+                    <select name="payment_status">
+                        <option value="completed" {% if ord_obj.payment_completed %}selected{% endif %}>Payment Completed</option>
+                        <option value="pending" {% if not ord_obj.payment_completed %}selected{% endif %}>Payment Pending</option>
+                    </select>
+                    <button class="btn btn-info">Change</button>
+                </form>
+            </div>
             
         </div>
     </div>
