@@ -7,11 +7,27 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    <div class="container">
-        <a href="{% url 'ecomapp:adminhome' %}">Home</a>
-        <a href="{% url 'ecomapp:adminorderlist' %}">All Orders</a>
-        <a  taget="_blank" href="{% url 'ecomapp:home' %}">Visit Site</a>
-    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'ecomapp:adminhome' %}">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ecomapp:adminorderlist' %}">
+                        <i class="fas fa-list"></i> All Orders
+                    </a>
+                </li>
+            </ul>
+            <a class="btn btn-info ml-auto" target="_blank" href="{% url 'ecomapp:home' %}">
+                <i class="fas fa-globe"></i> Visit Site
+            </a>
+        </div>
+    </nav>
+    
+    <br/>
+    <br/>
+    
 {% block content %}{% endblock content %}
 
    </body>
