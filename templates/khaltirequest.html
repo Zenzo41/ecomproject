@@ -13,53 +13,54 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="{% url 'ecomapp:home' %}">flavors bakery</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'ecomapp:home' %}">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ecomapp:allproducts' %}">Categories</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ecomapp:mycart' %}">Cart</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      My Account
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% if request.user.customer %}
-                        <li class="nav-item">
-                          Welcome {{request.user.username}}
-                        </li><br/>
-                        <a class="dropdown-item" href="{% url 'ecomapp:customerprofile' %}">My Profile</a></li>
-                        <a class="dropdown-item" href="{% url 'ecomapp:customerlogout' %}">Logout</a></li>
-            
-                    {% else %}
-                    <a class="dropdown-item" href="{% url 'ecomapp:customerregistration' %}">Register</a>
-                    <a class="dropdown-item" href="{% url 'ecomapp:customerlogin' %}">Login</a>
-                    
-                    {% endif %}</ul>
-                  </li>
-                
-                </ul>
-                <form class="d-flex" role="search" action="{% url 'ecomapp:search' %}" method="GET">
-                  <input class="form-control me-2" name="keyword" type="search" placeholder="Search product here..." aria-label="Search">
-                  <button class="btn btn-outline-success btn-warning" type="submit">Search</button>
-                </form>
-              </div>
-            </div>
-          </nav>
+ 
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'ecomapp:home' %}">flavors bakery</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'ecomapp:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'ecomapp:allproducts' %}">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'ecomapp:mycart' %}">Cart</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </a>
+          <ul class="dropdown-menu">
+              {% if request.user.customer %}
+              <li class="nav-item">
+                Welcome {{request.user.username}}
+              </li><br/>
+              <a class="dropdown-item" href="{% url 'ecomapp:customerprofile' %}">My Profile</a></li>
+              <a class="dropdown-item" href="{% url 'ecomapp:customerlogout' %}">Logout</a></li>
+  
+          {% else %}
+          <a class="dropdown-item" href="{% url 'ecomapp:customerregistration' %}">Register</a>
+          <a class="dropdown-item" href="{% url 'ecomapp:customerlogin' %}">Login</a>
           
+          {% endif %}</ul>
+        </li>
+      
+      </ul>
+      <form class="d-flex" role="search" action="{% url 'ecomapp:search' %}" method="GET">
+        <input class="form-control me-2" name="keyword" type="search" placeholder="Search product here..." aria-label="Search">
+        <button class="btn btn-outline-success btn-warning" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
           <div class="container d-flex justify-content-center align-items-center custom-container mt-5">
-            <div class="mb-3">
+            <div class="mb-3 d-block">
                 <h3>Your order amount is Rs. {{order.total}}.</h3>
             </div>
             <div class="mb-3">

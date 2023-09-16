@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate,login,logout 
 from django.views.generic import View, TemplateView ,CreateView, FormView,DetailView,ListView
-from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm
+from .forms import CheckoutForm, CustomerRegistrationForm,CustomerLoginForm,PaymentStatusUpdateForm
 from django.urls import reverse_lazy,reverse
 from .models import *
 from django.http import JsonResponse
@@ -416,6 +416,19 @@ class AdminOrderStatusChangeView(AdminRequiredMixin,View):
         order_obj.save()
         return redirect(reverse_lazy("ecomapp:adminorderdetail", kwargs={"pk": order_id}))
 
+class AdminPaymentStatusChangeView(AdminRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        order_id = self.kwargs["pk"]
+        order_obj = Order.objects.get(id=order_id)
+        new_payment_status = request.POST.get("payment_status")
+        # Check if the new_payment_status is "completed"
+        if new_payment_status == "completed":
+            order_obj.payment_completed = True
+        else:
+            order_obj.payment_completed = False
+        order_obj.save()
+        return redirect(reverse("ecomapp:adminorderdetail", kwargs={"pk": order_id}))
+    
 class SearchView(TemplateView):
     template_name = "search.html"
 

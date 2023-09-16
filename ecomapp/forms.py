@@ -34,3 +34,7 @@ class CustomerLoginForm(forms.ModelForm):
         model = Customer
         fields = ["username", "password"]
 
+class PaymentStatusUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['payment_completed']

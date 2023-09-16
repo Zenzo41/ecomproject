@@ -44,6 +44,7 @@
                     </tr>
                 </tbody>
             </table>
+
             <form action="{% url 'ecomapp:adminorderstatuschange' ord_obj.id %}" method="POST">
                 {% csrf_token %}
                 <select name="status">
@@ -54,6 +55,16 @@
                 <button class="btn btn-info">Change</button>
                 
             </form>
+
+            <form action="{% url 'ecomapp:adminpaymentstatuschange' ord_obj.id %}" method="POST">
+                {% csrf_token %}
+                <select name="payment_status">
+                    <option value="completed" {% if ord_obj.payment_completed %}selected{% endif %}>Completed</option>
+                    <option value="pending" {% if not ord_obj.payment_completed %}selected{% endif %}>Pending</option>
+                </select>
+                <button class="btn btn-info">Change</button>
+            </form>
+            
         </div>
     </div>
 </div>
