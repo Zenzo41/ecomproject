@@ -17,6 +17,7 @@ class Customer(models.Model):
     full_name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     joined_on = models.DateTimeField(auto_now_add=True)
+    mobile = models.IntegerField(max_length=10,default=9800000000)
 
 
     def __str__(self):
@@ -87,6 +88,12 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=20, choices=METHOD, default="Cash On Delivery")  # Corrected line
     payment_completed = models.BooleanField(default=False, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Automatically populate the mobile number from the associated Customer
+        if not self.mobile and self.cart.customer:
+            self.mobile = self.cart.customer.mobile
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return "Order: " + str(self.id)
