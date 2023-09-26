@@ -17,4 +17,11 @@ class OrderAdmin(admin.ModelAdmin):
 
 admin.site.register(Order, OrderAdmin)
 
-admin.site.register([Customer,Category,Product,Cart,CartProduct,Admin] )
+admin.site.register([Customer,Category,Cart,CartProduct,Admin] )
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'marked_price', 'selling_price', 'expiry', 'view_count')
+    list_filter = ('category', 'expiry')
+    search_fields = ('title', 'category__name')  # Assuming you have a name field in the Category model
+
+admin.site.register(Product, ProductAdmin)
