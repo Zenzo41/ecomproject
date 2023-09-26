@@ -40,7 +40,7 @@ class HomeView(TemplateView):
         context =  super().get_context_data(**kwargs)
         all_products = Product.objects.all().order_by("-id")
         #paginator
-        paginator = Paginator(all_products,4)
+        paginator = Paginator(all_products,6)
         page_number = self.request.GET.get("page")
         product_list = paginator.get_page(page_number)
         context['product_list'] = product_list
