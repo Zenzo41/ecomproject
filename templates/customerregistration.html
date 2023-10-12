@@ -3,32 +3,24 @@
 {% block title %}Customer Registration{% endblock title %}
 
 {% block content %}
-<style>
-    .errorlist{
-        color:red;
-    }
-</style>
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <h3>Customer Registration Form</h3><hr/>
-            <form action = "" method="POST">
+            <h3 class="mb-3">Customer Registration Form</h3>
+            <form action="" method="POST">
                 {% csrf_token %}
-                {{form.as_p}}
-                <button class="btn btn-primary"> Register Here</button>
+                {{ form.as_p }}
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Register Here</button>
+                </div>
 
                 {% if error %}
-                <li style="color:red;">{{error}}</li>
+                    <p class="text-danger">{{ error }}</p>
                 {% endif %}
-
             </form>
             <p>Already have an account? <a href="{% url 'ecomapp:customerlogin' %}">Login Here</a></p>
         </div>
     </div>
-
 </div>
-
-
 {% endblock content %}
